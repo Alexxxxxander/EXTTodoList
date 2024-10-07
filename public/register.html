@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Регистрация</title>
+    <script src="extjs/adapter/ext/ext-base.js"></script>
+    <script src="extjs/ext-all.js"></script>
+    <link rel="stylesheet" type="text/css" href="extjs/resources/css/ext-all.css">
+    <script>
+        Ext.onReady(function() {
+            // Создаем форму и сохраняем её в переменной
+            var registerForm = new Ext.FormPanel({
+                renderTo: 'register-container',
+                title: 'Register',
+                width: 300,
+                items: [{
+                    xtype: 'textfield',
+                    fieldLabel: 'Username',
+                    name: 'username',
+                    allowBlank: false
+                }, {
+                    xtype: 'textfield',
+                    fieldLabel: 'Password',
+                    name: 'password',
+                    inputType: 'password',
+                    allowBlank: false
+                }],
+                buttons: [{
+                    text: 'Register',
+                    handler: function() {
+                        // Используем переменную registerForm для вызова submit()
+                        registerForm.getForm().submit({
+                            url: 'src/auth.php',
+                            params: {action: 'register'},
+                            success: function() {
+                                window.location = 'login.html';
+                            },
+                            failure: function() {
+                                alert('Registration failed');
+                            }
+                        });
+                    }
+                }],
+                bbar: [{
+                    xtype: 'box',
+                    html: '<p>Есть аккаунт? <a href="login.html">Войти</a></p>'
+                }]
+            });
+        });
+    </script>
+</head>
+<body>
+<div id="register-container"></div>
+</body>
+</html>

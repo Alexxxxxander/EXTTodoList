@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Логин</title>
+    <script src="extjs/adapter/ext/ext-base.js"></script>
+    <script src="extjs/ext-all.js"></script>
+    <link rel="stylesheet" type="text/css" href="extjs/resources/css/ext-all.css">
+    <script>
+        Ext.onReady(function() {
+            var loginForm = new Ext.FormPanel({
+                renderTo: 'auth-container',
+                title: 'Login',
+                items: [{
+                    xtype: 'textfield',
+                    fieldLabel: 'Username',
+                    name: 'username',
+                    allowBlank: false
+                }, {
+                    xtype: 'textfield',
+                    fieldLabel: 'Password',
+                    name: 'password',
+                    inputType: 'password',
+                    allowBlank: false
+                }],
+                buttons: [{
+                    text: 'Login',
+                    handler: function() {
+                        loginForm.getForm().submit({
+                            url: 'src/auth.php',
+                            params: {action: 'login'},
+                            success: function() {
+                                window.location = 'index.html';
+                            },
+                            failure: function() {
+                                alert('Login failed');
+                            }
+                        });
+                    }
+                }],
+                bbar: [{
+                    xtype: 'box',
+                    html: '<p>Нет аккаунта? <a href="register.html">Зарегистрироваться</a></p>'
+                }]
+            });
+        });
+    </script>
+</head>
+<body>
+<div id="auth-container"></div>
+</body>
+</html>
